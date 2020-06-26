@@ -1,0 +1,19 @@
+{
+  "name": "localweathernodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "main": "env-cmd -f ./config/main.env node src/index.js",
+    "dev": "env-cmd -f ./config/dev.env node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "env-cmd": "^10.1.0",
+    "mongodb": "^3.5.9",
+    "mqtt": "^4.1.0",
+    "mysql2": "^2.1.0"
+  }
+}
