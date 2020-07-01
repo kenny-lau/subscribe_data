@@ -12,9 +12,13 @@ subscribeWeatherData((err, message) => {
         console.log(err)
     } else {
         const data = JSON.parse(message)
-        mysqlInsertData(data)
-        mongodbInsertEntry(data)
-        console.log(`Data stamped: ${new Date(data.time * 1000).toISOString()}`)
+        mysqlInsertData(data).then(() => {
+            return mongodbInsertEntry(data)
+        }).then(() => {
+            console.log(`Data stamped: ${new Date(data.time * 1000).toISOString()}`)
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 })
 

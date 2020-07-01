@@ -16,13 +16,16 @@ console.log('Connected to MySQL')
 
 // Insert into the 'local_weather' table
 const mysqlInsertData = (obj) => {
-    let sql = 'INSERT INTO local_weather (time, temperature, humidity, pressure, windSpeed, uvIndex, visibility) values '
-    sql += `(${obj.time}, ${obj.temperature}, ${obj.humidity}, ${obj.pressure}, ${obj.windSpeed}, ${obj.uvIndex}, ${obj.visibility})`
-    pool.query(sql, function (err, rows, fields) {
-        // Connection is automatically released when query resolves
-        if (err) {
-            console.log(`Insert error: ${err}`)
-        }
+    return new Promise((resolve, reject) => {
+        let sql = 'INSERT INTO local_weather (time, temperature, humidity, pressure, windSpeed, uvIndex, visibility) values '
+        sql += `(${obj.time}, ${obj.temperature}, ${obj.humidity}, ${obj.pressure}, ${obj.windSpeed}, ${obj.uvIndex}, ${obj.visibility})`
+        pool.query(sql, ((err, rows, fields) => {
+            // Connection is automatically released when query resolves
+            if (err) {
+                reject(`Insert error: ${err}`)
+            }
+            resolve()
+        }))
     })
 }
 

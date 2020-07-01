@@ -35,13 +35,18 @@ const mongodbGetTodayData = ((callback) => {
 
 // Insert into mongodb
 const mongodbInsertEntry = ((obj) => {
-    const connect = connection
-    connect.then(() => {
-        const db = client.db(databaseName)
-        db.collection(collectionName).insertOne(obj, (err, result) => {
-            if (err) { // return error message
-                return console.log(`Insert into MongoDB error: ${err}`)
-            }
+    return new Promise((resolve, reject) => {
+        const connect = connection
+        connect.then(() => {
+            const db = client.db(databaseName)
+            db.collection(collectionName).insertOne(obj, (err, result) => {
+                if (err) { // return error message
+                    reject(`Insert into MongoDB error: ${err}`)
+                }
+            })
+            resolve()
+        }).catch((error) => {
+            reject(error)
         })
     })
 })
